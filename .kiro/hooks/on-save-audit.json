@@ -1,0 +1,1 @@
+{"hooks":[{"command":"node app/lib/analyzer.js --file ${file}","description":"DRAFT — validate this format against kiro-cli docs once logged in. Intended: when a .sol file under app/ is saved, run the analyzer on it and show a summary.","event":"onFileSave","match":"**/*.sol","name":"on-save-audit"}],"version":1}

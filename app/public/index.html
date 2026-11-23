@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chimera — Smart-Contract Audit Copilot</title>
+<style>
+  body { background: #0d1117; color: #e6edf3; font-family: system-ui, sans-serif; margin: 0; padding: 2rem; }
+  h1 { font-size: 1.6rem; } h1 span { color: #7ee787; }
+  .sub { color: #8b949e; margin-bottom: 1.5rem; }
+  label { display: block; margin: 1rem 0 .3rem; color: #c9d1d9; }
+  input, select, textarea { width: 100%; box-sizing: border-box; background: #161b22; color: #e6edf3; border: 1px solid #30363d; border-radius: 6px; padding: .6rem; font-family: monospace; }
+  textarea { min-height: 140px; }
+  button { margin-top: 1rem; background: #238636; color: #fff; border: 0; border-radius: 6px; padding: .7rem 1.4rem; font-size: 1rem; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: wait; }
+  #status { margin-top: 1rem; color: #d29922; }
+  #status.error { color: #f85149; }
+  #severitySummary { color: #8b949e; font-size: .85rem; margin-top: .3rem; }
+  #filterRow { display: none; flex-wrap: wrap; gap: .4rem; margin: .8rem 0 .4rem; }
+  .filter-btn { margin-top: 0; background: #21262d; color: #c9d1d9; border: 1px solid #30363d; border-radius: 20px; padding: .3rem .85rem; font-size: .85rem; cursor: pointer; }
+  .filter-btn.active { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+  .filter-btn .badge { background: #30363d; border-radius: 10px; padding: .05rem .4rem; margin-left: .3rem; font-size: .78rem; }
+  .filter-btn.active .badge { background: #0d419d; }
+  .finding { border: 1px solid #30363d; border-left: 4px solid #d29922; border-radius: 6px; padding: .8rem; margin: .6rem 0; background: #161b22; }
+  .finding.High { border-left-color: #f85149; } .finding.Medium { border-left-color: #d29922; }
+  .finding.Low { border-left-color: #58a6ff; } .finding.Informational { border-left-color: #8b949e; }
+  .finding.Optimization { border-left-color: #a371f7; }
+  .finding h3 { margin: 0 0 .3rem; font-size: 1rem; }
+  .finding p { margin: .3rem 0; color: #c9d1d9; }
+  .meta { color: #8b949e; font-size: .85rem; }
+  .triage { background: #0d1117; border: 1px dashed #30363d; border-radius: 4px; padding: .5rem; margin-top: .5rem; }
+  #exportBtn { background: #1f6feb; }
+  .note { color: #8b949e; font-size: .9rem; }
+</style>
+</head>
+<body>
+<h1>🧟 Chimera <span>— Smart-Contract Audit Copilot</span></h1>
+<p class="sub">Frankenstein entry for Kiroween 2026: Slither static analysis + live on-chain source + an AI triage agent, stitched into one tool.</p>
+
+<label>Contract address (EVM)</label>
+<input id="address" placeholder="0x…" spellcheck="false">
+<label>Chain</label>
+<select id="chain">
+  <option value="1">Ethereum</option>
+  <option value="56">BSC</option>
+  <option value="42161">Arbitrum</option>
+  <option value="10">Optimism</option>
+</select>
+<label>…or paste Solidity source</label>
+<textarea id="source" placeholder="pragma solidity ^0.8.0; …" spellcheck="false"></textarea>
+<br>
+<button id="analyzeBtn">Analyze</button>
+<button id="exportBtn" hidden>Export report (.md)</button>
+<div id="status"></div>
+<div id="severitySummary"></div>
+<div id="filterRow">
+  <button class="filter-btn active" data-sev="All">All <span class="badge" id="badge-All">0</span></button>
+  <button class="filter-btn" data-sev="High">High <span class="badge" id="badge-High">0</span></button>
+  <button class="filter-btn" data-sev="Medium">Medium <span class="badge" id="badge-Medium">0</span></button>
+  <button class="filter-btn" data-sev="Low">Low <span class="badge" id="badge-Low">0</span></button>
+  <button class="filter-btn" data-sev="Informational">Informational <span class="badge" id="badge-Informational">0</span></button>
+  <button class="filter-btn" data-sev="Optimization">Optimization <span class="badge" id="badge-Optimization">0</span></button>
+</div>
+<div id="results"></div>
+<p class="note">Read-only analysis. No wallet, no transactions. Findings are leads to verify — not a full audit.</p>
+<script src="app.js"></script>
+</body>
+</html>

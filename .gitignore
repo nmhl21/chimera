@@ -1,0 +1,5 @@
+# NEVER ignore .kiro — Kiroween rules disqualify submissions that do.
+node_modules/
+.env
+*.log
+.DS_Store
