@@ -8,7 +8,7 @@ import path from 'node:path';
 
 const CHAINS = { 1: 'Ethereum', 56: 'BSC', 42161: 'Arbitrum', 10: 'Optimism' };
 const SLITHER = process.env.SLITHER_BIN || '/home/hatch/workspace/bug-bounty/audit-venv/bin/slither';
-const SVM_DIR = '/home/hatch/.svm';
+const SVM_DIR = process.env.SVM_DIR || '/home/hatch/.svm';
 const TIMEOUT_MS = 15_000;
 
 // Slither needs a solc binary; this VM keeps them under ~/.svm/<version>/solc-<version>.

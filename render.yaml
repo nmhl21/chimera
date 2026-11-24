@@ -1,0 +1,32 @@
+# Render Blueprint — Chimera (Kiroween 2026).
+# Deploy: push this file + Dockerfile to the repo, then in Render dashboard:
+#   New + -> Blueprint -> connect repo nmhl21/chimera -> Apply.
+# Or: New + -> Web Service -> connect repo -> Runtime: Docker -> Free plan.
+#
+# LLM_API_KEY is sync:false on purpose: it is a SECRET and must be set in
+# the Render dashboard (Environment tab), never committed. Value = the
+# Gemini API key from Google AI Studio (create/copy there, never paste
+# it in chat or in any file). LLM_BASE_URL / LLM_MODEL are public config
+# and safe to keep here.
+#
+# Free-plan notes: 750 h/month free; service sleeps after 15 min idle, so
+# the first request after idle takes ~30-60 s to wake (cold start). An
+# /api/analyze call itself takes ~15-20 s. Judges test during
+# 16 Dec 2026 - 29 Jan 2027, so keep the service deployed until then.
+
+services:
+  - type: web
+    name: chimera
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: LLM_API_KEY
+        sync: false
+      - key: LLM_BASE_URL
+        value: https://generativelanguage.googleapis.com/v1beta/openai
+      - key: LLM_MODEL
+        value: gemini-3-flash-preview
+      - key: NODE_ENV
+        value: production

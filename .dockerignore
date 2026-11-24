@@ -1,0 +1,6 @@
+.git
+video/
+scripts/
+*.md
+.DS_Store
+node_modules/
