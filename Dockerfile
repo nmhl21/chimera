@@ -34,7 +34,7 @@ RUN mkdir -p /opt/svm \
       && curl -fsSL -o /opt/svm/$v/solc-$v https://github.com/ethereum/solidity/releases/download/v$v/solc-static-linux \
       && chmod +x /opt/svm/$v/solc-$v; \
     done \
- && ln -s /opt/svm/0.8.30/solc-0.8.30 /usr/local/bin/solc
+ && ln -sf /opt/svm/0.8.30/solc-0.8.30 /usr/local/bin/solc
 
 WORKDIR /app
 
